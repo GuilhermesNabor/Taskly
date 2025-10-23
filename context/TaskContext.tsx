@@ -1,0 +1,56 @@
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export type Task = {
+  id: string;
+  title: string;
+  completed: boolean;
+};
+
+type TaskContextType = {
+  tasks: Task[];
+  addTask: (title: string) => void;
+  toggleTask: (id: string) => void;
+  deleteTask: (id: string) => void;
+};
+
+const TaskContext = createContext<TaskContextType | undefined>(undefined);
+
+export const TaskProvider = ({ children }: { children: React.ReactNode }) => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const stored = await AsyncStorage.getItem('@tasks');
+      if (stored) setTasks(JSON.parse(stored));
+    })();
+  }, []);
+
+  useEffect(() => {
+    AsyncStorage.setItem('@tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
+  const addTask = (title: string) => {
+    setTasks([...tasks, { id: Date.now().toString(), title, completed: false }]);
+  };
+
+  const toggleTask = (id: string) => {
+    setTasks(tasks.map(t => (t.id === id ? { ...t, completed: !t.completed } : t)));
+  };
+
+  const deleteTask = (id: string) => {
+    setTasks(tasks.filter(t => t.id !== id));
+  };
+
+  return (
+    <TaskContext.Provider value={{ tasks, addTask, toggleTask, deleteTask }}>
+      {children}
+    </TaskContext.Provider>
+  );
+};
+
+export const useTasks = () => {
+  const context = useContext(TaskContext);
+  if (!context) throw new Error('useTasks deve ser usado dentro de TaskProvider');
+  return context;
+};
