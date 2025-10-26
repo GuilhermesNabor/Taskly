@@ -1,22 +1,20 @@
-# 📱 Task Manager App (React Native)
+# Taskly - Task Manager App (React Native)
 
-Um aplicativo de gerenciamento de tarefas desenvolvido com **React Native CLI**, **React Navigation**, **AsyncStorage** e **Context API**.  
-Permite adicionar, marcar como concluída e excluir tarefas, tudo salvo localmente no dispositivo.
-
----
-
-## 🚀 Funcionalidades
-
-- ✅ Adicionar novas tarefas  
-- ✅ Marcar tarefas como concluídas  
-- ✅ Excluir tarefas  
-- ✅ Salvamento automático no dispositivo via AsyncStorage  
-- ✅ Navegação entre telas com React Navigation  
-- ✅ Tema escuro moderno e responsivo
+Um aplicativo de gerenciamento de tarefas desenvolvido com React Native, focado em uma interface limpa e funcionalidades essenciais para o dia a dia.
 
 ---
 
-## 🧠 Estrutura do Projeto
+## Funcionalidades
+
+- **Gerenciamento de Tarefas:** Adicione, edite e exclua tarefas de forma simples e rápida.
+- **Status da Tarefa:** Marque tarefas como concluídas para melhor acompanhamento.
+- **Anexo de Imagens:** Adicione uma foto a cada tarefa, utilizando a câmera ou a galeria do dispositivo.
+- **Persistência de Dados:** As tarefas e imagens são salvas localmente no dispositivo usando AsyncStorage e o sistema de arquivos.
+- **Tema Dinâmico:** Alterne entre os modos claro (light) e escuro (dark) para melhor conforto visual. A preferência de tema também é salva.
+
+---
+
+## Estrutura do Projeto
 
 ```
  ├─ App.tsx
@@ -26,83 +24,54 @@ Permite adicionar, marcar como concluída e excluir tarefas, tudo salvo localmen
  │   ├─ HomeScreen.tsx
  │   └─ AddTaskScreen.tsx
  ├─ context/
- │   └─ TaskContext.tsx
+ │   ├─ TaskContext.tsx
+ │   └─ ThemeContext.tsx
  ├─ components/
- │   └─ TaskItem.tsx
+ │   ├─ TaskItem.tsx
+ │   └─ EditTaskModal.tsx
+ ├─ theme/
+ │   └─ colors.ts
 ```
 
 ---
 
-## ⚙️ Instalação e Configuração
+## Tecnologias Utilizadas
 
-### 1️⃣ Clonar o repositório
+| Tecnologia | Descrição |
+|---|---|
+| React Native | Framework principal para desenvolvimento multiplataforma. |
+| TypeScript | Superset do JavaScript que adiciona tipagem estática. |
+| React Navigation | Solução de roteamento e navegação para o app. |
+| Context API | Gerenciamento de estado global para tarefas e tema. |
+| AsyncStorage | Armazenamento local de dados (tarefas e preferência de tema). |
+| React Native Image Picker | Biblioteca para seleção de imagens da galeria e câmera. |
+| React Native FS | Biblioteca para manipulação do sistema de arquivos, usada para salvar as imagens. |
+
+---
+
+## Instalação e Execução
+
+1. **Clonar o repositório**
 ```bash
 git clone https://github.com/GuilhermesNabor/Taskly.git
 cd Taskly
 ```
 
-### 2️⃣ Instalar dependências
+2. **Instalar dependências**
 ```bash
 npm install
 ```
 
-### 3️⃣ Instalar pacotes necessários
-```bash
-npm install @react-navigation/native @react-navigation/native-stack
-npm install @react-native-async-storage/async-storage
-npm install react-native-screens
-```
-
-### 4️⃣ Instalar dependências nativas (iOS)
-```bash
-npx pod-install ios
-```
-
-### 5️⃣ Limpar cache e iniciar o projeto
-```bash
-npm start --reset-cache
-```
-
-### 6️⃣ Rodar no Android
+3. **Executar no Android**
 ```bash
 npx react-native run-android
 ```
 
-### 7️⃣ Rodar no iOS
+4. **Executar no iOS**
 ```bash
+npx pod-install ios
 npx react-native run-ios
 ```
-
----
-
-## 🖼️ Interface
-
-- **Tela Inicial (HomeScreen):** lista de tarefas com opção de marcar como concluída e excluir.  
-- **Tela Nova Tarefa (AddTaskScreen):** campo para digitar e salvar uma nova tarefa.  
-- **Design:** tema escuro com elementos modernos e responsivos.
-
----
-
-## 🧰 Tecnologias Utilizadas
-
-| Tecnologia | Descrição |
-|-------------|------------|
-| React Native CLI | Framework principal |
-| React Navigation | Navegação entre telas |
-| AsyncStorage | Armazenamento local |
-| Context API | Gerenciamento de estado global |
-| TypeScript | Tipagem estática |
-
----
-
-## 🧼 Comandos de manutenção
-
-| Ação | Comando |
-|------|----------|
-| Limpar cache | `npm start --reset-cache` |
-| Reinstalar pacotes | `rm -rf node_modules && npm install` |
-| Atualizar dependências | `npm update` |
-| Instalar pods (iOS) | `npx pod-install ios` |
 
 ---
 

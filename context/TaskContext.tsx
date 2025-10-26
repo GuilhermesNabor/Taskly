@@ -5,13 +5,15 @@ export type Task = {
   id: string;
   title: string;
   completed: boolean;
+  imageUri?: string;
 };
 
 type TaskContextType = {
   tasks: Task[];
-  addTask: (title: string) => void;
+  addTask: (title: string, imageUri?: string) => void;
   toggleTask: (id: string) => void;
   deleteTask: (id: string) => void;
+  editTask: (id: string, newTitle: string) => void;
 };
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -30,8 +32,8 @@ export const TaskProvider = ({ children }: { children: React.ReactNode }) => {
     AsyncStorage.setItem('@tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-  const addTask = (title: string) => {
-    setTasks([...tasks, { id: Date.now().toString(), title, completed: false }]);
+  const addTask = (title: string, imageUri?: string) => {
+    setTasks([...tasks, { id: Date.now().toString(), title, completed: false, imageUri }]);
   };
 
   const toggleTask = (id: string) => {
@@ -42,8 +44,12 @@ export const TaskProvider = ({ children }: { children: React.ReactNode }) => {
     setTasks(tasks.filter(t => t.id !== id));
   };
 
+  const editTask = (id: string, newTitle: string) => {
+    setTasks(tasks.map(t => (t.id === id ? { ...t, title: newTitle } : t)));
+  };
+
   return (
-    <TaskContext.Provider value={{ tasks, addTask, toggleTask, deleteTask }}>
+    <TaskContext.Provider value={{ tasks, addTask, toggleTask, deleteTask, editTask }}>
       {children}
     </TaskContext.Provider>
   );
