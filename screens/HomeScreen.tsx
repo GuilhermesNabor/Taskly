@@ -6,6 +6,12 @@ import TaskItem from '../components/TaskItem';
 import EditTaskModal from '../components/EditTaskModal';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
+
+const options = {
+  enableVibrateFallback: true,
+  ignoreAndroidSystemSettings: false,
+};
 
 export default function HomeScreen() {
   const { tasks, editTask } = useTasks();
@@ -25,21 +31,34 @@ export default function HomeScreen() {
     setSelectedTask(null);
   };
 
-  const handleEditSubmit = (newTitle: string) => {
+  const handleEditSubmit = (newTitle: string, newPriority: Priority) => {
     if (selectedTask) {
-      editTask(selectedTask.id, newTitle);
+      editTask(selectedTask.id, newTitle, newPriority);
     }
     handleCloseEditModal();
   };
 
+  const handleThemeToggle = () => {
+    ReactNativeHapticFeedback.trigger("impactLight", options);
+    toggleTheme();
+  }
+
   const styles = getStyles(themeColors);
+
+  const renderEmptyComponent = () => (
+    <View style={styles.emptyContainer}>
+      <Icon name="check-circle-outline" size={80} color={themeColors.subtext} />
+      <Text style={styles.emptyTitle}>Tudo limpo!</Text>
+      <Text style={styles.emptySubtitle}>Adicione uma nova tarefa para começar.</Text>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} backgroundColor={themeColors.background} />
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Taskly</Text>
-        <TouchableOpacity onPress={toggleTheme}>
+        <TouchableOpacity onPress={handleThemeToggle}>
           <Icon name="brightness-6" size={24} color={themeColors.text} />
         </TouchableOpacity>
       </View>
@@ -49,7 +68,8 @@ export default function HomeScreen() {
         renderItem={({ item }) => (
           <TaskItem task={item} onEdit={() => handleOpenEditModal(item)} />
         )}
-        ListEmptyComponent={<Text style={styles.empty}>Nenhuma tarefa ainda 😴</Text>}
+        ListEmptyComponent={renderEmptyComponent}
+        contentContainerStyle={styles.listContent}
       />
 
       <TouchableOpacity
@@ -87,10 +107,24 @@ const getStyles = (themeColors: any) => StyleSheet.create({
     fontWeight: 'bold',
     color: themeColors.text,
   },
-  empty: {
+  listContent: {
+    flexGrow: 1,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: themeColors.text,
+    marginTop: 20,
+  },
+  emptySubtitle: {
+    fontSize: 16,
     color: themeColors.subtext,
-    textAlign: 'center',
-    marginTop: 50,
+    marginTop: 8,
   },
   addButton: {
     position: 'absolute',

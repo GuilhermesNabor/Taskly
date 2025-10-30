@@ -2,6 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
 import AddTaskScreen from '../screens/AddTaskScreen';
+import AlarmScreen from '../screens/AlarmScreen';
 import { useTheme } from '../context/ThemeContext';
 
 const Stack = createNativeStackNavigator();
@@ -28,6 +29,11 @@ const AppNavigator = () => {
         name="AddTask" 
         component={AddTaskScreen} 
         options={{ title: 'Nova Tarefa' }} 
+      />
+      <Stack.Screen 
+        name="Alarm" 
+        component={AlarmScreen} 
+        options={{ headerShown: false, presentation: 'modal' }} 
       />
     </Stack.Navigator>
   );
