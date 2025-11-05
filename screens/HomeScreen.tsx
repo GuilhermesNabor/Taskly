@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
+import { SafeAreaView, View, Text, FlatList, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
 import { useTasks, Task } from '../context/TaskContext';
 import { useTheme } from '../context/ThemeContext';
 import TaskItem from '../components/TaskItem';
@@ -54,7 +54,7 @@ export default function HomeScreen() {
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} backgroundColor={themeColors.background} />
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Taskly</Text>
@@ -85,7 +85,7 @@ export default function HomeScreen() {
         onSubmit={handleEditSubmit}
         task={selectedTask}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
