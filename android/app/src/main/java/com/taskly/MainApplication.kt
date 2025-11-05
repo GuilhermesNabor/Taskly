@@ -1,4 +1,4 @@
-package com.meuapp
+package com.taskly
 
 import android.app.Application
 import com.facebook.react.PackageList

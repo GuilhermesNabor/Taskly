@@ -1,5 +1,5 @@
 {
-  "name": "Taskly",
+  "name": "taskly",
   "version": "0.0.1",
   "description": "A simple task manager app built with React Native.",
   "private": true,
